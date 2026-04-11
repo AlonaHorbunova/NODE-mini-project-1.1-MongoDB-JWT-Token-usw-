@@ -1,0 +1,33 @@
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const mongoUrl = process.env.MONGO_URL;
+const dbName = process.env.DB_NAME;
+
+export async function connectDB() {
+  try {
+    if (!mongoUrl) {
+      console.error("Ошибка: MONGO_URL не найден в .env");
+      process.exit(1);
+    }
+    await mongoose.connect(mongoUrl, {
+      dbName: dbName,
+    });
+
+    console.log(`Подключение к MongoDB успешно. База: ${dbName}`);
+  } catch (error) {
+    console.error("Ошибка подключения к базе:", error.message);
+    process.exit(1);
+  }
+}
+
+export async function closeDB() {
+  try {
+    await mongoose.connection.close();
+    console.log("Соединение с MongoDB через Mongoose закрыто.");
+  } catch (error) {
+    console.error("Ошибка при закрытии базы:", error.message);
+  }
+}
