@@ -2,6 +2,7 @@ import "dotenv/config";
 import { connectDB, closeDB } from "./db/index.js";
 import startServer from "./server.js";
 
+
 process.on("SIGINT", async () => {
   console.log("Завершение работы приложения (SIGINT)...");
   await closeDB();
@@ -14,14 +15,12 @@ process.on("SIGTERM", async () => {
   process.exit(0);
 });
 
-const bootstrap = async () => {
+const bootstrap = async (): Promise<void> => {
   try {
     await connectDB();
-
     startServer();
-  } catch (error) {
+  } catch (error: any) {
     console.error("Ошибка при запуске приложения:", error.message);
-
     process.exit(1);
   }
 };

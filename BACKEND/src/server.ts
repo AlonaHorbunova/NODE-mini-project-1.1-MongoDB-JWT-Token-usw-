@@ -1,22 +1,23 @@
-import express from "express";
+import express, {
+  type Request,
+  type Response,
+  type Application,
+} from "express";
 import cors from "cors";
-
 import errorHandler from "./middlewares/errorHandler.js";
 import notFound from "./middlewares/notFound.js";
-
 import authRoutes from "./routes/auth.routes.js";
 import postsRoutes from "./routes/posts.routes.js";
 
-const startServer = () => {
-  const app = express();
+const startServer = (): void => {
+  const app: Application = express();
 
   app.use(cors());
   app.use(express.json());
 
-  app.get("/", (req, res) => res.send("Я родился!"));
+  app.get("/", (req: Request, res: Response) => res.send("Я родился!"));
 
   app.use("/api/auth", authRoutes);
-
   app.use("/api/posts", postsRoutes);
 
   app.use(notFound);

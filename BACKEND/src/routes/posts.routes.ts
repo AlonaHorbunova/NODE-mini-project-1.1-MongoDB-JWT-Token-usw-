@@ -2,10 +2,11 @@ import { Router } from "express";
 import { getAllPosts, createPost } from "../controllers/posts.controller.js";
 import { authMiddleware } from "../middlewares/auth.js";
 
-const router = Router();
+const router: Router = Router();
 
 router.get("/", getAllPosts);
 
+// authMiddleware теперь защищает роут и добавляет user в req
 router.post("/", authMiddleware, createPost);
 
 export default router;
