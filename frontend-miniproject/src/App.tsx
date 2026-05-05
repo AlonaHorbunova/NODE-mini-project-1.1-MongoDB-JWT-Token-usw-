@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "./redux/hooks";
 import { logOut } from "./redux/auth/authSlice";
 
 import {
@@ -39,12 +39,12 @@ const theme = createTheme({
 });
 
 function App() {
-  const { isAuth, user } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  // Теперь TS знает, что в user лежат email и username
+  const { isAuth, user } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   const handleLogout = () => {
     dispatch(logOut());
-    localStorage.removeItem("token");
     alert("Вы вышли из системы");
   };
 
@@ -107,7 +107,7 @@ function App() {
                           fontSize: "0.8rem",
                         }}
                       >
-                        {user?.username?.charAt(0).toUpperCase()}
+                        {user?.username?.charAt(0).toUpperCase() || "U"}
                       </Avatar>
                       <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
                         {user?.username}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPosts } from "../api/posts";
+import { getPosts, Post } from "../api/posts";
 import {
   Container,
   Card,
@@ -11,8 +11,9 @@ import {
 } from "@mui/material";
 
 const HomePage = () => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Указываем, что в стейте массив объектов типа Post
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
